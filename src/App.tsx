@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import type Task from "./types/Task";
+import type Task from "@/types/Task";
 
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
+import TaskForm from "@/components/TaskForm";
+import TaskList from "@/components/TaskList";
 
 export default function App() {
 
