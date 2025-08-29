@@ -3,6 +3,7 @@ import { useState } from "react";
 import type Task from "./types/Task";
 
 import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
 
 export default function App() {
 
@@ -20,6 +21,7 @@ export default function App() {
           Hello world!
         </h1>
         <TaskForm onAdd={handleAdd} />
+        <TaskList tasks={tasks} />
       </div>
     </>
   )
