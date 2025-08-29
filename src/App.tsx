@@ -15,14 +15,16 @@ export default function App() {
   }
 
   return (
-    <>
-      <div>
-        <h1 className="text-3xl font-bold underline">
-          Hello world!
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500 p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-white text-center mb-8 drop-shadow-lg">
+          Focus Task
         </h1>
-        <TaskForm onAdd={handleAdd} />
-        <TaskList tasks={tasks} />
+        <div className="grid md:grid-cols-2 gap-8">
+          <TaskForm onAdd={handleAdd} />
+          <TaskList tasks={tasks} />
+        </div>
       </div>
-    </>
+    </div>
   )
 }
