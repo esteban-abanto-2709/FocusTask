@@ -1,97 +1,132 @@
 import { useState } from "react";
-
 import type { Task } from '@/types/Task';
 import { useTasks } from "@/hook/useTasks";
 
 export default function TaskImporter() {
-
   const { addTask } = useTasks();
   const [jsonInput, setJsonInput] = useState("");
+  const [copyButtonText, setCopyButtonText] = useState("📋 Copiar Directrices");
 
-  //TODO: Mejorar esta parte del texto y idicar las cosas reales de como subir el json
-  const placeholder = `Directrices para agregar tareas en formato JSON:
+  // Directrices claras para la IA
+  const aiDirectives = `Por favor, genera un JSON con tareas para mi proyecto siguiendo exactamente este formato:
+
 [
   {
-    "title": "Diseñar logo",
-    "description": "Crear un logo minimalista para la app",
-    "priority": "media",
+    "title": "Nombre corto y claro de la tarea",
+    "description": "Descripción detallada de qué hacer exactamente",
+    "priority": "alta"
   },
   {
-    "title": "Configurar CI/CD",
-    "description": "Automatizar despliegue con GitHub Actions",
-    "priority": "baja",
+    "title": "Segunda tarea del proyecto",
+    "description": "Otra descripción específica y accionable",
+    "priority": "media"
   }
-]`;
+]
 
-  function onClickCopyFormat() {
-    navigator.clipboard.writeText(placeholder)
-      .then(() => {
-        //TODO: Tiene que cambiar, no quiero una alerta, busquemos otra forma de indicar que se copio
-        alert("Formato copiado al portapapeles ✅");
-      })
-      .catch((err) => {
-        console.error("Error copiando: ", err);
-      });
+REGLAS IMPORTANTES:
+- Solo usa estas prioridades: "alta", "media", "baja"
+- Title: máximo 50 caracteres, sea específico
+- Description: detalla QUÉ hacer y CÓMO hacerlo
+- Genera entre 5-15 tareas ordenadas por importancia
+- NO agregues comas al final de las propiedades
+- Asegúrate que el JSON sea válido para copiar y pegar directamente`;
+
+  async function handleCopyDirectives() {
+    try {
+      await navigator.clipboard.writeText(aiDirectives);
+      setCopyButtonText("✅ Directrices Copiadas");
+      setTimeout(() => setCopyButtonText("📋 Copiar Directrices"), 3000);
+    } catch (err) {
+      console.error("Error copiando:", err);
+      setCopyButtonText("❌ Error al copiar");
+      setTimeout(() => setCopyButtonText("📋 Copiar Directrices"), 3000);
+    }
   }
 
-  function onClickUploadTasks() {
+  function handleImportTasks() {
+    if (!jsonInput.trim()) {
+      alert("Por favor, pega el JSON generado por la IA");
+      return;
+    }
+
     try {
       const parsed = JSON.parse(jsonInput);
 
       if (!Array.isArray(parsed)) {
-        alert("El JSON debe ser un arreglo de tareas");
+        alert("El JSON debe ser un array de tareas");
         return;
       }
 
-      //TODO: Si la validacion es necesaria es porque el 'placeholder' esta mal hecho, tenemos que removerlo
-      parsed.forEach((task: Task, index: number) => {
-        if (typeof task.title !== "string") {
-          throw new Error(`Tarea en posición ${index} no válida`);
-        }
+      parsed.forEach((taskData: Task) => {
+        addTask({
+          title: taskData.title,
+          description: taskData.description,
+          priority: taskData.priority
+        });
       });
 
-      parsed.forEach((task: Task) => addTask(task));
-
       setJsonInput("");
+      alert(`✅ ${parsed.length} tareas importadas exitosamente`);
 
-      //TODO: Tiene que cambiar, no quiero una alerta
-      alert("Tareas cargadas con éxito ✅");
-    } catch (err) {
-      console.error(err);
-
-      //TODO: Tiene que cambiar, no quiero una alerta
-      alert("El texto no es un JSON válido de tareas");
+    } catch {
+      alert("JSON inválido. Asegúrate de copiar exactamente lo que generó la IA");
     }
   }
 
   return (
     <div className="bg-white/20 backdrop-blur-lg p-6 rounded-3xl shadow-xl border border-white/30 hover:shadow-2xl transition-all duration-300">
-      <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-md">Agregar Varias Tareas</h2>
 
-      <div className="flex flex-col gap-4">
+      <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-md">
+        📦 Importar Tareas
+      </h2>
 
+      <div className="space-y-4">
+
+        {/* Área de texto para el JSON */}
         <div>
-          <label className="block text-sm font-medium text-white/90 mb-2">Pergar formato de Json</label>
-          <textarea value={jsonInput}
-            onChange={(e) => { setJsonInput(e.currentTarget.value) }}
-            className="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/40 transition-all duration-200 resize-none h-60"
-            placeholder={placeholder}
+          <label className="block text-sm font-medium text-white/90 mb-2">
+            JSON de Tareas (generado por IA)
+          </label>
+
+          <textarea value={jsonInput} onChange={(e) => setJsonInput(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/40 transition-all duration-200 resize-none h-64 font-mono text-sm"
+            placeholder="Pega aquí el JSON que generó tu IA..."
           />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Botones de acción */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
           <button
-            onClick={onClickCopyFormat}
-            className="w-full mt-4 px-6 py-3 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold border border-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
+            onClick={handleCopyDirectives}
+            className="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium border border-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
           >
-            Copiar Indicaciones
+            {copyButtonText}
           </button>
+
           <button
-            onClick={onClickUploadTasks}
-            className="w-full mt-4 px-6 py-3 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold border border-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
+            onClick={handleImportTasks}
+            disabled={!jsonInput.trim()}
+            className={`px-4 py-3 rounded-xl font-medium border backdrop-blur-sm transition-all duration-300 ${!jsonInput.trim()
+              ? 'bg-gray-500/20 border-gray-400/30 text-gray-300 cursor-not-allowed'
+              : 'bg-green-500/20 hover:bg-green-500/30 border-green-300/40 text-green-100 hover:scale-105 hover:shadow-lg active:scale-95'
+              }`}
           >
-            Subir Tareas
+            ⬆️ Importar Tareas
           </button>
+        </div>
+
+        {/* Flujo de trabajo simple */}
+        <div className="mt-6 p-4 rounded-xl bg-white/5 border border-white/10">
+          <h3 className="text-sm font-semibold text-white/90 mb-2">
+            🤖 Flujo con IA:
+          </h3>
+          <div className="text-xs text-white/70 space-y-1">
+            <p><strong>1.</strong> Copia las directrices con el botón de arriba</p>
+            <p><strong>2.</strong> Pégalas en tu IA favorita + describe tu proyecto</p>
+            <p><strong>3.</strong> Copia el JSON que te genere</p>
+            <p><strong>4.</strong> Pégalo arriba y presiona "Importar Tareas"</p>
+          </div>
         </div>
       </div>
     </div>
