@@ -24,7 +24,7 @@ export interface Task {
 
 export interface TaskContextType {
   tasks: Task[];
-  addTask: (task: Omit<Task, 'id' | 'createdAt'>) => void;
+  addTask: (task: Omit<Task, 'id' | 'createdAt'  | 'status'>) => void;
   updateTask: (id: string, updates: Partial<Pick<Task, 'title' | 'description' | 'priority' | 'status'>>) => void;
   deleteTask: (id: string) => void;
   markAsCompleted: (id: string) => void;

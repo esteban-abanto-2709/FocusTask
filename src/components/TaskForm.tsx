@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useTasks } from "@/hook/useTasks";
-import { TaskPriority, TaskStatus, type TaskPriorityType } from "@/types/Task";
+import { TaskPriority, type TaskPriorityType } from "@/types/Task";
 
 export default function TaskForm() {
 
@@ -15,8 +15,7 @@ export default function TaskForm() {
     const newTask = {
       title,
       description,
-      priority,
-      status: TaskStatus.PENDIENTE
+      priority
     };
 
     addTask(newTask);
@@ -33,9 +32,7 @@ export default function TaskForm() {
       <div className="flex flex-col gap-4">
         <div>
           <label className="block text-sm font-medium text-white/90 mb-2">Título</label>
-          <input
-            type="text"
-            value={title}
+          <input type="text" value={title}
             onChange={(e) => { setTitle(e.currentTarget.value) }}
             className="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/40 transition-all duration-200"
             placeholder="Ingresa el título..."
@@ -44,8 +41,7 @@ export default function TaskForm() {
 
         <div>
           <label className="block text-sm font-medium text-white/90 mb-2">Descripción</label>
-          <textarea
-            value={description}
+          <textarea value={description}
             onChange={(e) => { setDescription(e.currentTarget.value) }}
             className="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/40 transition-all duration-200 resize-none h-20"
             placeholder="Describe tu tarea..."

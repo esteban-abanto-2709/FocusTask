@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import type { Task, TaskContextType } from '@/types/Task';
+import { TaskStatus } from '@/types/Task';
 
 import { TaskContext } from "@/context/TaskContext";
 
@@ -10,13 +11,14 @@ interface TaskProviderProps {
 export default function TaskProvider({ children }: TaskProviderProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const addTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
+  const addTask = (taskData: Omit<Task, 'id' | 'createdAt' | 'status'>) => {
     const newTask: Task = {
       ...taskData,
       id: crypto.randomUUID(),
       createdAt: Date.now(),
+      status: TaskStatus.PENDIENTE
     };
-
+  
     setTasks(prevTasks => [...prevTasks, newTask]);
   };
 
