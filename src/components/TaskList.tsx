@@ -1,10 +1,8 @@
-import type Task from "@/types/Task";
+import { useTasks } from "@/hook/useTasks";
 
-interface TaskListProps {
-  tasks: Task[];
-}
+export default function TaskList() {
 
-export default function TaskList({ tasks }: TaskListProps) {
+  const { tasks } = useTasks();
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -44,7 +42,7 @@ export default function TaskList({ tasks }: TaskListProps) {
       <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-md">
         📋 Mis Tareas ({tasks.length})
       </h2>
-      
+
       {tasks.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-6xl mb-4 opacity-50">📝</div>
@@ -54,7 +52,7 @@ export default function TaskList({ tasks }: TaskListProps) {
       ) : (
         <div className="space-y-4 max-h-96 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40">
           {tasks.map((task, index) => (
-            <div 
+            <div
               key={index}
               className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/20 hover:bg-white/15 transition-colors duration-300"
             >
@@ -67,11 +65,11 @@ export default function TaskList({ tasks }: TaskListProps) {
                   {getPriorityIcon(task.priority)} {task.priority.toUpperCase()}
                 </div>
               </div>
-              
+
               <p className="text-white/80 mb-3 leading-relaxed">
                 {task.description}
               </p>
-              
+
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-2 text-white/60">
                   <span>🕐</span>
