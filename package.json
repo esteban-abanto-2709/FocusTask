@@ -3,6 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "Esteban Abanto",
+    "email": "esteban.abanto.2709@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esteban-abanto-2709/FocusTask"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
