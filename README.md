@@ -41,8 +41,8 @@ Focus Task elimina este friction cognitivo mediante un sistema de **recomendaci�
 - [x] Interfaz de usuario pulida
 - [x] Arquitectura de componentes escalable
 - [ ] **Persistencia Local** (LocalStorage)
-- [ ] **Botón "Dame una Tarea"** con algoritmo básico
-- [ ] **Importación JSON** para generación masiva
+- [x] **Botón "Dame una Tarea"** con algoritmo básico
+- [x] **Importación JSON** para generación masiva
 
 ### 📍 Fase 2: Escalabilidad y Nube *(Próximos meses)*
 
@@ -151,7 +151,7 @@ Focus Task aspira a convertirse en la herramienta definitiva para profesionales 
 
 <div align="center">
 
-**¿Te gusta el proyecto? ⭐ Dale una estrella en GitHub**
+¿Te gusta el proyecto? ⭐ Dale una estrella en GitHub
 
 [Demo Live](https://focus-task.vercel.app) • [Documentación](https://docs.focus-task.com) • [Roadmap Detallado](https://github.com/tuusuario/focus-task/projects/1)
 

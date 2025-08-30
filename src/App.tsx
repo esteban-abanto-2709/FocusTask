@@ -2,6 +2,7 @@ import TaskProvider from "@/components/TaskProvider";
 import TaskForm from "@/components/TaskForm";
 import TaskImporter from "@/components/TaskImporter";
 import TaskGrid from "@/components/TaskGrid";
+import TaskGetter from "@/components/TaskGetter";
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
         </h1>
         <TaskProvider>
           <div className="grid md:grid-cols-2 gap-8">
+            <TaskGetter/>
             <TaskForm />
             <TaskImporter />
             <TaskGrid />

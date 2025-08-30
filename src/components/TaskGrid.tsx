@@ -1,7 +1,6 @@
 import { useTasks } from "@/hook/useTasks";
 import TaskCard from "./TaskCard";
 
-
 export default function TaskGrid() {
   const { tasks } = useTasks();
 
