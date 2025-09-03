@@ -2,8 +2,8 @@ export interface User {
   id: string;
   email: string;
   emailConfirmed: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface UpdateUserRequest {

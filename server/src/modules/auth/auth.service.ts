@@ -15,11 +15,22 @@ export const register = async (email: string, password: string) => {
       throw new Error(error.message);
     }
 
+    if (!data.user || !data.session) {
+      throw new Error('Login failed - no user or session returned');
+    }
+
     logger.info(`Usuario registrado: ${email}`);
     return {
-      id: data.user?.id,
-      email: data.user?.email,
-      needsConfirmation: !data.user?.email_confirmed_at
+      user: {
+        id: data.user.id,
+        email: data.user.email
+      },
+      session: {
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+        expires_at: data.session.expires_at,
+        expires_in: data.session.expires_in
+      }
     };
 
   } catch (err: any) {
@@ -50,8 +61,7 @@ export const login = async (email: string, password: string) => {
     return {
       user: {
         id: data.user.id,
-        email: data.user.email,
-        emailConfirmed: !!data.user.email_confirmed_at
+        email: data.user.email
       },
       session: {
         access_token: data.session.access_token,

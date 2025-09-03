@@ -1,6 +1,6 @@
 ### Variables (cambiar por un userId real de tu DB)
 @baseUrl = http://localhost:4000
-@userId = 196ef9ac-dceb-4654-9cbe-34c9d0823433
+@userId = 0b71144f-f0ed-46e2-bfce-49390784b06c
 
 ### ==========================================
 ### Obtener perfil de usuario

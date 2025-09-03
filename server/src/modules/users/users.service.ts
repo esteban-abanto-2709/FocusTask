@@ -22,9 +22,9 @@ export const getUserById = async (userId: string): Promise<User> => {
     return {
       id: user.id,
       email: user.email || '',
-      emailConfirmed: !!user.email_confirmed_at,
-      createdAt: user.created_at,
-      updatedAt: user.updated_at
+      emailConfirmed: !!user.confirmation_sent_at,
+      created_at: user.created_at,
+      updated_at: user.updated_at
     };
 
   } catch (err: any) {
@@ -61,9 +61,9 @@ export const updateUserProfile = async (userId: string, updates: UpdateUserReque
     return {
       id: user.id,
       email: user.email || '',
-      emailConfirmed: !!user.email_confirmed_at,
-      createdAt: user.created_at,
-      updatedAt: user.updated_at
+      emailConfirmed: !!user.confirmation_sent_at,
+      created_at: user.created_at,
+      updated_at: user.updated_at
     };
 
   } catch (err: any) {
