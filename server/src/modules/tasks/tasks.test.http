@@ -1,0 +1,143 @@
+### Variables (cambiar por un userId real de tu DB)
+@baseUrl = http://localhost:4000
+@userId = 0b71144f-f0ed-46e2-bfce-49390784b06c
+@taskId = 8980a21a-7b08-4678-9aa5-7eda48b6f991
+
+### ==========================================
+### Crear nueva tarea
+### ==========================================
+POST {{baseUrl}}/api/tasks/{{userId}}/create
+Content-Type: application/json
+
+{
+  "title": "Implementar sistema de tareas",
+  "description": "Crear CRUD completo para manejo de tareas con Supabase",
+  "priority": "high"
+}
+
+###
+
+### ==========================================
+### Obtener todas las tareas del usuario
+### ==========================================
+GET {{baseUrl}}/api/tasks/{{userId}}/getTasks
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Obtener tareas con filtros
+### ==========================================
+GET {{baseUrl}}/api/tasks/{{userId}}/getTasks?status=pending&priority=high&limit=5
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Obtener tareas paginadas
+### ==========================================
+GET {{baseUrl}}/api/tasks/{{userId}}/getTasks?limit=10&offset=0
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Obtener una tarea específica
+### ==========================================
+GET {{baseUrl}}/api/tasks/{{userId}}/getTask/{{taskId}}
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Actualizar tarea - cambiar estado
+### ==========================================
+PUT {{baseUrl}}/api/tasks/{{userId}}/update/{{taskId}}
+Content-Type: application/json
+
+{
+  "status": "in_progress"
+}
+
+###
+
+### ==========================================
+### Actualizar tarea - cambiar título y descripción
+### ==========================================
+PUT {{baseUrl}}/api/tasks/{{userId}}/update/{{taskId}}
+Content-Type: application/json
+
+{
+  "title": "Tarea actualizada",
+  "description": "Nueva descripción de la tarea",
+  "priority": "medium"
+}
+
+###
+
+### ==========================================
+### Completar tarea
+### ==========================================
+PUT {{baseUrl}}/api/tasks/{{userId}}/update/{{taskId}}
+Content-Type: application/json
+
+{
+  "status": "completed"
+}
+
+###
+
+### ==========================================
+### Obtener estadísticas de tareas
+### ==========================================
+GET {{baseUrl}}/api/tasks/{{userId}}/stats
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Eliminar tarea
+### ==========================================
+DELETE {{baseUrl}}/api/tasks/{{userId}}/delete/{{taskId}}
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Casos de error para testing
+### ==========================================
+
+### Crear tarea sin título (error)
+POST {{baseUrl}}/api/tasks/{{userId}}/create
+Content-Type: application/json
+
+{
+  "description": "Solo descripción, sin título"
+}
+
+###
+
+### Crear tarea con título muy largo (error)
+POST {{baseUrl}}/api/tasks/{{userId}}/create
+Content-Type: application/json
+
+{
+  "title": "Este es un título extremadamente largo que excede los 255 caracteres permitidos para probar la validación del sistema. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris",
+  "priority": "low"
+}
+
+###
+
+### Actualizar tarea que no existe (error)
+PUT {{baseUrl}}/api/tasks/{{userId}}/update/tarea-inexistente
+Content-Type: application/json
+
+{
+  "status": "completed"
+}
+
+###
+
+### Obtener tarea que no existe (error)
+GET {{baseUrl}}/api/tasks/{{userId}}/getTask/tarea-inexistente
+Content-Type: application/json

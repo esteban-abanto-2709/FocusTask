@@ -8,8 +8,6 @@ export const getProfile = async (req: Request, res: Response) => {
     // Después esto vendrá del middleware de auth: req.user.id
     const userId = req.params.userId || "temp-user-id";
 
-    console.log(userId);
-
     const user = await getUserById(userId);
 
     res.status(200).json({
