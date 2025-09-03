@@ -1,0 +1,73 @@
+### Variables (cambiar por un userId real de tu DB)
+@baseUrl = http://localhost:4000
+@userId = 196ef9ac-dceb-4654-9cbe-34c9d0823433
+
+### ==========================================
+### Obtener perfil de usuario
+### ==========================================
+GET {{baseUrl}}/api/users/profile/{{userId}}
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Actualizar perfil - caso exitoso
+### ==========================================
+PUT {{baseUrl}}/api/users/profile/{{userId}}
+Content-Type: application/json
+
+{
+  "email": "nuevo-email@example.com"
+}
+
+###
+
+### ==========================================
+### Actualizar perfil - email inválido (error)
+### ==========================================
+PUT {{baseUrl}}/api/users/profile/{{userId}}
+Content-Type: application/json
+
+{
+  "email": "email-invalido"
+}
+
+###
+
+### ==========================================
+### Actualizar perfil - body vacío (error)
+### ==========================================
+PUT {{baseUrl}}/api/users/profile/{{userId}}
+Content-Type: application/json
+
+{
+}
+
+###
+
+### ==========================================
+### Obtener perfil - usuario inexistente (error)
+### ==========================================
+GET {{baseUrl}}/api/users/profile/usuario-que-no-existe
+Content-Type: application/json
+
+###
+
+### ==========================================
+### Para después: con autenticación
+### (Descomenta cuando tengamos middleware)
+### ==========================================
+
+# ### Obtener MI perfil (con token)
+# GET {{baseUrl}}/api/users/profile
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
+
+# ### Actualizar MI perfil (con token)  
+# PUT {{baseUrl}}/api/users/profile
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
+
+# {
+#   "email": "mi-nuevo-email@example.com"
+# }

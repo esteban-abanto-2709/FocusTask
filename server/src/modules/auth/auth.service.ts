@@ -1,5 +1,5 @@
-import { getSupabaseClient } from "@/config/supabase";
-import logger from "@/utils/logger";
+import { getSupabaseClient } from "@/shared/config/supabase";
+import logger from "@/shared/utils/logger";
 
 export const register = async (email: string, password: string) => {
   try {
